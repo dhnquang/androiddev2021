@@ -44,4 +44,3 @@ public class WeatherActivity extends AppCompatActivity {
         Log.i("destroyed", "Destroyed Activity");
     }
 }
-
