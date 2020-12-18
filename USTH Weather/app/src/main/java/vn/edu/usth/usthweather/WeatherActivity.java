@@ -1,7 +1,5 @@
 package vn.edu.usth.usthweather;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.util.Log;
 
@@ -11,36 +9,44 @@ public class WeatherActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
-        Log.i("create", "Create Activity");
+        WeatherFragment weatherFragment = new WeatherFragment();
+        getSupportFragmentManager().beginTransaction().add(
+                R.id.Weather_container, weatherFragment).commit();
+        ForecastFragment forecastFragment = new ForecastFragment();
+        getSupportFragmentManager().beginTransaction().add(
+                R.id.Fragment_container, forecastFragment).commit();
+
+        Log.i("Weather", "onCreate() is called");
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        Log.i("started", "Started Activity");
+        Log.i("Weather", "onStart() is called");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.i("resumed","Resumed to Activity");
+        Log.i("Weather", "onResume() is called");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        Log.i("paused", "Paused Activity");
+        Log.i("Weather", "onPause() is called");
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        Log.i("stopped","Stopped Activity");
+        Log.i("Weather", "onStop() is called");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.i("destroyed", "Destroyed Activity");
+        Log.i("Weather", "onDestroy() is called");
     }
 }
+
