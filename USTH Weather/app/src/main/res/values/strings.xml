@@ -2,4 +2,20 @@
     <string name="app_name">USTH Weather</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="Mon">Thứ Hai</string>
+    <string name="Tue">Thứ Ba</string>
+    <string name="Wed">Thứ Tư</string>
+    <string name="Thu">Thứ Năm</string>
+    <string name="Fri">Thứ Sáu</string>
+    <string name="Sat">Thứ Bảy</string>
+    <string name="Sun">Chủ Nhật</string>
+    <string name="part_cloud">Có mây rải rác</string>
+    <string name="rain">Mưa rào</string>
+    <string name="thunderstorm">Mưa giông</string>
+    <string name="scat_thunderstorm">Mưa giông rải rác</string>
+    <string name="scat_rain">Mưa rải rác</string>
+    <string name="cloudy">Nhiều mây</string>
+    <string name="showers">Mưa rào</string>
+    <string name="scat_showers">Mưa rào rải rác</string>
+    <string name="paris">Paris</string>
 </resources>

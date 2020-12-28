@@ -12,17 +12,18 @@
         android:name="vn.edu.usth.usthweather.WeatherFragment"
         android:layout_width="match_parent"
         android:layout_height="250dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="10dp" />
+        android:background="@drawable/frame"
+        android:layout_marginLeft="@dimen/weather_margin"
+        android:layout_marginTop="@dimen/weather_margin"
+        android:layout_marginRight="@dimen/weather_margin" />
 
 
     <fragment
         android:id="@+id/fragment_forecast"
         android:name="vn.edu.usth.usthweather.ForecastFragment"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="@dimen/weather_margin"
+        android:layout_marginRight="@dimen/weather_margin"
+        android:layout_marginBottom="@dimen/weather_margin"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
