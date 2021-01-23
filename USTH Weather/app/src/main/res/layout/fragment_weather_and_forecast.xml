@@ -12,7 +12,6 @@
         android:name="vn.edu.usth.usthweather.WeatherFragment"
         android:layout_width="match_parent"
         android:layout_height="250dp"
-        android:background="@drawable/frame"
         android:layout_marginLeft="@dimen/weather_margin"
         android:layout_marginTop="@dimen/weather_margin"
         android:layout_marginRight="@dimen/weather_margin" />

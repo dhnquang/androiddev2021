@@ -1,5 +1,6 @@
 package vn.edu.usth.usthweather;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -7,24 +8,34 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
+import androidx.annotation.RequiresApi;
 
+import android.os.Handler;
+import android.os.Looper;
+import android.content.Intent;
+import android.os.Build;
+import android.os.Message;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
+
 
 import com.google.android.material.tabs.TabLayout;
 
-public class WeatherActivity extends AppCompatActivity {
+public class WeatherActivity<DetailFragment, MediaPlayer> extends AppCompatActivity {
+
+    private MediaPlayer player;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
-//        WeatherFragment weatherFragment = new WeatherFragment();
-//        getSupportFragmentManager().beginTransaction().add(
-//                R.id.Weather_container, weatherFragment).commit();
-//        ForecastFragment forecastFragment = new ForecastFragment();
-//        getSupportFragmentManager().beginTransaction().add(
-//                R.id.Fragment_container, forecastFragment).commit();
+
+//        player = MediaPlayer.create(this,R.raw.song);
+//        player.start();
+
         PagerAdapter adapter = new HomeFragmentPagerAdapter(getSupportFragmentManager());
         ViewPager pager = (ViewPager) findViewById(R.id.pager);
         pager.setOffscreenPageLimit(3);
@@ -57,6 +68,11 @@ public class WeatherActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
+
+//        player.stop();
+//        player.release();
+//        player = null;
+
         Log.i("Weather", "onStop() is called");
     }
 
@@ -98,5 +114,58 @@ public class WeatherActivity extends AppCompatActivity {
             return titles[page];
         }
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            
+            case R.id.refresh:
+                Toast.makeText(this,"Refresh",Toast.LENGTH_SHORT).show();
+                final Handler handler = new Handler(Looper.getMainLooper()) {
+                    @Override
+                    public void handleMessage(Message msg) {
+                        // This method is executed in main thread
+                        String content = msg.getData().getString("server_response");
+                        Toast.makeText(getApplicationContext(), content, Toast.LENGTH_SHORT).show();
+                    }
+                };
+
+                Thread t = new Thread(new Runnable() {
+                    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+                    @Override
+                    public void run() {
+                        try {
+                            Thread.sleep(5000);
+                        }
+                        catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
+                        Bundle bundle = new Bundle();
+                        bundle.putString("server_response", "some sample json here");
+
+                        Message msg = new Message();
+                        msg.setData(bundle);
+                        handler.sendMessage(msg);
+                    }
+                });
+                t.start();
+
+                return true;
+            case R.id.setting:
+                Intent intent = new Intent(this, PrefActivity.class);
+                startActivity(intent);
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+    }
+
 }
 
