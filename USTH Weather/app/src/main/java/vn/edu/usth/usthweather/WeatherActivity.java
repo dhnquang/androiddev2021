@@ -20,6 +20,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+import android.os.AsyncTask;
 
 
 import com.google.android.material.tabs.TabLayout;
@@ -124,38 +125,40 @@ public class WeatherActivity<DetailFragment, MediaPlayer> extends AppCompatActiv
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
-            
+
             case R.id.refresh:
                 Toast.makeText(this,"Refresh",Toast.LENGTH_SHORT).show();
-                final Handler handler = new Handler(Looper.getMainLooper()) {
-                    @Override
-                    public void handleMessage(Message msg) {
-                        // This method is executed in main thread
-                        String content = msg.getData().getString("server_response");
-                        Toast.makeText(getApplicationContext(), content, Toast.LENGTH_SHORT).show();
-                    }
-                };
-
-                Thread t = new Thread(new Runnable() {
-                    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-                    @Override
-                    public void run() {
-                        try {
-                            Thread.sleep(5000);
-                        }
-                        catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-
-                        Bundle bundle = new Bundle();
-                        bundle.putString("server_response", "some sample json here");
-
-                        Message msg = new Message();
-                        msg.setData(bundle);
-                        handler.sendMessage(msg);
-                    }
-                });
-                t.start();
+//                final Handler handler = new Handler(Looper.getMainLooper()) {
+//                    @Override
+//                    public void handleMessage(Message msg) {
+//                        // This method is executed in main thread
+//                        String content = msg.getData().getString("server_response");
+//                        Toast.makeText(getApplicationContext(), content, Toast.LENGTH_SHORT).show();
+//                    }
+//                };
+//
+//                Thread t = new Thread(new Runnable() {
+//                    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+//                    @Override
+//                    public void run() {
+//                        try {
+//                            Thread.sleep(5000);
+//                        }
+//                        catch (InterruptedException e) {
+//                            e.printStackTrace();
+//                        }
+//
+//                        Bundle bundle = new Bundle();
+//                        bundle.putString("server_response", "some sample json here");
+//
+//                        Message msg = new Message();
+//                        msg.setData(bundle);
+//                        handler.sendMessage(msg);
+//                    }
+//                });
+//                t.start();
+                refresh rf = new refresh();
+                rf.execute();
 
                 return true;
             case R.id.setting:
@@ -165,6 +168,23 @@ public class WeatherActivity<DetailFragment, MediaPlayer> extends AppCompatActiv
                 return super.onOptionsItemSelected(item);
         }
 
+    }
+
+    public class refresh extends AsyncTask<Void, Void, Void>{
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try {
+                Thread.sleep(5000);
+            }catch (InterruptedException e){
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            Toast.makeText(getApplicationContext(), "some sample json here", Toast.LENGTH_SHORT).show();
+        }
     }
 
 }
